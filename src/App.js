@@ -6,6 +6,7 @@ class App extends Component {
     super(props);
     this.state = {
       counter: 0,
+      error: 'Counter value cannot be negative',
     };
   }
 
@@ -14,7 +15,10 @@ class App extends Component {
       <div data-test="component-app">
         <h1 data-test="counter-display">The counter is currently {this.state.counter}</h1>
         <button
-          onClick={() => this.setState(prevState => ({ counter: prevState.counter + 1}))}
+          onClick={() => this.setState(prevState => {
+            if (prevState.counter < 0) return { counter: 0 };
+            return { counter: prevState.counter + 1};
+          })}
           data-test="increment-button"
         >
           Increment counter
@@ -25,6 +29,15 @@ class App extends Component {
         >
           Decrement counter
         </button>
+
+        {(this.state.counter < 0) && 
+          <p
+            style={{ color: "red"}}
+            data-test="error-message"
+          >
+            {this.state.error}
+          </p>
+        }
       </div>
     );
   }
