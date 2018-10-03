@@ -13,7 +13,7 @@ const setup = (props = {}, state = null) => {
 
 // Test Wrapper to pass a value to be tested from the dom
 const findByTestAttr = (wrapper, value) => {
-  return wrapper.find(`[data-test=${value}]`);
+  return wrapper.find(`[data-test="${value}"]`);
 }
 
 test('renders without crashing', () => {
@@ -41,7 +41,9 @@ test('renders counter display', () => {
 
 
 test('counter starts at 0', () => {
-
+  const wrapper = setup();
+  const initialCounterState = wrapper.state('counter');
+  expect(initialCounterState).toBe(0);
 });
 
 test('clicking button increments counter display', () => {
