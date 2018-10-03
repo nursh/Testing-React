@@ -8,7 +8,9 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 // Setup function to setup create a shallow wrapper for the App Component
 const setup = (props = {}, state = null) => {
-  return shallow(<App {...props} />);
+  const wrapper = shallow(<App {...props} />);
+  if (state) return wrapper.setState(state);
+  return wrapper;
 }
 
 // Test Wrapper to pass a value to be tested from the dom
@@ -47,5 +49,18 @@ test('counter starts at 0', () => {
 });
 
 test('clicking button increments counter display', () => {
+  const counter = 7;
+  const wrapper = setup(null, { counter });
 
+  // find button, click and then update wrapper
+  const button = findByTestAttr(wrapper, 'increment-button');
+  button.simulate('click');
+  wrapper.update();
+
+  // find display and test value
+  const updatedCounter = 8;
+  const counterDisplay = findByTestAttr(wrapper, 'counter-display');
+  expect(counterDisplay.text()).toContain(updatedCounter);
 });
+
+test
