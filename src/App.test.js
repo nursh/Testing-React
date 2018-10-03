@@ -8,7 +8,9 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 test('renders without crashing', () => {
   const wrapper = shallow(<App />);
-
+  // add an html element to the component with data-test attribute to test it is rendering
+  const appComponent = wrapper.find(`[data-test='component-app']`);
+  expect(appComponent.length).toBe(1);
 });
 
 test('renders increment button', () => {
