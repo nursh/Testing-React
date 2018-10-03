@@ -11,11 +11,16 @@ const setup = (props = {}, state = null) => {
   return shallow(<App {...props} />);
 }
 
+// Test Wrapper to pass a value to be tested from the dom
+const findByTestAttr = (wrapper, value) => {
+  return wrapper.find(`[data-test=${value}]`);
+}
+
 test('renders without crashing', () => {
   const wrapper = setup();
   // add an html element to the component with data-test attribute to test it is rendering
   // check its length then implement it
-  const appComponent = wrapper.find(`[data-test='component-app']`);
+  const appComponent = findByTestAttr(wrapper, 'component-app');
   expect(appComponent.length).toBe(1);
 });
 
@@ -23,13 +28,13 @@ test('renders without crashing', () => {
 // Check to see if an element exists on the page that is crucial to the application
 test('renders increment button', () => {
   const wrapper = setup();
-  const incrementButton = wrapper.find(`[data-test='increment-button']`);
+  const incrementButton = findByTestAttr(wrapper, 'increment-button');
   expect(incrementButton.length).toBe(1);
 });
 
 test('renders counter display', () => {
   const wrapper = setup();
-  const counterDisplay = wrapper.find(`[data-test='counter-display']`);
+  const counterDisplay = findByTestAttr(wrapper, 'counter-display');
   expect(counterDisplay.length).toBe(1);
 });
 
